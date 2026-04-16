@@ -1,0 +1,11 @@
+[user]
+    name  = Adam Leff
+    email = adamleff@gmail.com
+[core]
+    editor = vim
+[color]
+    ui = auto
+[alias]
+    st = status
+    co = checkout
+    lg = log --oneline --graph --decorate
