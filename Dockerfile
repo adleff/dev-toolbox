@@ -8,7 +8,8 @@ LABEL maintainer="Adam Leff" \
 # Single RUN layer: keeps the layer count low and cache efficient.
 # Order: update → install → clean.  Never split dnf update from install.
 RUN dnf update -y && \
-    dnf install -y \
+    dnf install -y epel-release && \
+    dnf install -y --allowerasing \
         bash \
         git \
         curl \
@@ -23,7 +24,7 @@ RUN dnf update -y && \
         unzip \
         less \
         man-db \
-        shellcheck && \
+        xz && \
     dnf clean all && \
     rm -rf /var/cache/dnf
 
@@ -35,6 +36,13 @@ RUN ARCH=$(uname -m) && \
       "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${YQ_ARCH}" \
       -o /usr/local/bin/yq && \
     chmod +x /usr/local/bin/yq
+
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "aarch64" ]; then SC_ARCH="aarch64"; else SC_ARCH="x86_64"; fi && \
+    curl -fsSL \
+      "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.${SC_ARCH}.tar.xz" \
+      | tar -xJ --strip-components=1 -C /usr/local/bin shellcheck-v0.10.0/shellcheck && \
+    chmod +x /usr/local/bin/shellcheck
 
 # ── AWS CLI v2 ─────────────────────────────────────────────────────────────────
 RUN ARCH=$(uname -m) && \

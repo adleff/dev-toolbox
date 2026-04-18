@@ -1,11 +1,18 @@
 [user]
-    name  = Adam Leff
-    email = adamleff@gmail.com
+  name = Adam Leff
+  email = adamleff@gmail.com
+
 [core]
-    editor = vim
+  excludesfile = ~/.config/git/ignore
+  editor = vim
+
+[init]
+  defaultBranch = main
+
 [color]
-    ui = auto
+  ui = auto
+
 [alias]
-    st = status
-    co = checkout
-    lg = log --oneline --graph --decorate
+  st = status
+  co = checkout
+  lg = log --oneline --graph --decorate
